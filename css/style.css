@@ -1,0 +1,696 @@
+/* ====== Reset & base ====== */
+:root {
+  --table-cell-bg: rgba(255,255,255,0.03);
+  --table-cell-bg-hover: rgba(124,77,255,0.10);
+  --table-head-bg: rgba(255,255,255,0.05);
+  --karma-color: #ff5e5e;
+  --bg: #0e0f13;
+  --bg-soft: #151821;
+  --card: rgba(255,255,255,0.06);
+  --card-border: rgba(255,255,255,0.12);
+  --text: #e6e9f0;
+  --muted: #a5aec6;
+  --accent-1: #7c4dff;
+  --accent-2: #00d4ff;
+  --shadow: 0 8px 24px rgba(0,0,0,0.25);
+  --radius: 18px;
+}
+
+.app-body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(1200px 600px at 10% -10%, rgba(124,77,255,0.25), transparent 60%),
+              radial-gradient(1400px 800px at 100% 0%, rgba(0,212,255,0.18), transparent 50%),
+              var(--bg);
+  color: var(--text);
+}
+
+/* Light mode overrides */
+.app-body:not(.dark-mode) {
+  --table-cell-bg: rgba(255,255,255,0.55);
+  --table-cell-bg-hover: rgba(124,77,255,0.08);
+  --table-head-bg: rgba(255,255,255,0.75);
+  --karma-color: #e54848; /* un rojo un poco menos agresivo en claro */
+  --bg: #d7d4ce;               /* gris cálido claro, base neutra */
+  --bg-soft: #e2dfd8;           /* fondo intermedio, tipo pergamino */
+  --card: rgba(255,255,255,0.45);  /* menos blanco, más transparencia */
+  --card-border: rgba(60,60,60,0.1);
+  --text: #2b2e35;              /* gris oscuro más suave que negro */
+  --muted: #5d6375;             /* gris medio azulado */
+  --accent-1: #7a5cf0;          /* violeta amable */
+  --accent-2: #0097c2;          /* cian brillante pero no agresivo */
+  --shadow: 0 6px 16px rgba(40,40,60,0.08);
+}
+
+/* Efecto glass más suave para modo claro */
+.app-body:not(.dark-mode) .card.glass {
+  background: linear-gradient(145deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2));
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(80,80,80,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+
+/* ====== Hero ====== */
+.hero {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(180%) blur(12px);
+  background: linear-gradient(90deg, rgba(124,77,255,0.15), rgba(0,212,255,0.15));
+  border-bottom: 1px solid var(--card-border);
+}
+
+.hero .container {
+  padding: 18px 0;
+}
+
+.hero-title h1 {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.hero-title p {
+  color: var(--muted);
+}
+
+.hero-logo {
+  /* transform: scale(0.3); */
+  transform-origin: left center;
+  height: 66px;       /* o 24px / 32px según te guste */
+  width: auto;        /* mantiene proporción */
+  display: block;     /* evita espacios raros de inline-img */
+}
+
+
+
+/* ====== Buttons ====== */
+.btn-gradient {
+  border: 0;
+  color: #e9e9e9;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  box-shadow: 0 8px 20px rgba(124,77,255,0.35), 0 6px 16px rgba(0,212,255,0.25);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-gradient:hover { transform: translateY(-1px); }
+
+.btn-pill {
+  border-radius: 999px;
+}
+
+.btn-glass {
+  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  color: var(--text);
+  padding: 8px 12px;
+  box-shadow: var(--shadow);
+}
+
+/* ====== Cards / Glass ====== */
+.card.glass {
+  border-radius: var(--radius);
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.card-title, .card-subtitle {
+  font-weight: 700;
+}
+
+.list-group-transparent .list-group-item {
+  background: transparent;
+  border: 1px dashed var(--card-border);
+  color: var(--text);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+/* ====== Inputs ====== */
+.form-control-neo {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.app-body:not(.dark-mode) .form-control-neo {
+  background: #f4f1ec;
+}
+/* === Form-control "estático" para divs con innerHTML === */
+.form-control-static {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;             /* igual que .form-control bootstrap */
+  font-size: 1rem !important;          /* clave: mismo tamaño que inputs */
+  font-weight: 400;
+  line-height: 1.5;
+  min-height: calc(1.5em + .75rem + 2px); /* mismo alto que input */
+  border-radius: 12px;
+}
+
+/* Asegura que los spans internos NO achiquen */
+.form-control-static .num-crudo,
+.form-control-static .num-sep,
+.form-control-static .num-principal {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+
+/* ====== Content layout ====== */
+.content {
+  padding: 24px 0 60px;
+}
+
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 992px) {
+  .grid-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 576px) {
+  .grid-cards { grid-template-columns: 1fr; }
+}
+
+/* Etapas layout */
+.etapas-grid {
+  display: grid;
+  gap: 14px;
+}
+.etapa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 26px;
+  font-size: 1.35rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+}
+.fila-1 { justify-content: space-between; padding-inline: 38px; }
+.fila-2 { gap: 56px; }
+.fila-3, .fila-4 { gap: 12px; }
+
+/* ====== Tables ====== */
+/* Asegurar color de texto de la tabla según el tema */
+.table-glass,
+.table-glass thead th,
+.table-glass tbody td {
+  color: var(--text) !important;           /* clave: ata el color a la variable del tema */
+}
+
+/* Evitar que Bootstrap meta fondos que “ensucien” */
+.table-glass {
+  --bs-table-bg: transparent !important;
+  background: transparent !important;
+}
+.table-glass thead th {
+  font-weight: 700;
+  border-bottom: 1px solid var(--card-border);
+}
+.table-glass tbody td {
+  padding: 18px 10px;
+  border-bottom: 1px dashed var(--card-border);
+}
+.table-glass .sep-row td {
+  border: 0;
+  height: 8px;
+  padding: 0;
+}
+
+/* ====== Footer ====== */
+.footer {
+  margin-top: auto;
+  padding: 16px 0 24px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--card-border);
+  background: linear-gradient(0deg, rgba(0,0,0,0.08), transparent);
+}
+
+/* ====== Toggle ====== */
+.modo-toggle .toggle-emoji {
+  display: inline-block;
+  font-size: 1.15rem;
+  transform: translateY(1px);
+}
+
+
+/* Tema oscuro mejorado (coherente con .app-body) */
+.app-body.dark-mode {
+  background-color: #121212 !important;
+  color: #f8f9fa !important;
+}
+
+.app-body.dark-mode .card,
+.app-body.dark-mode .table {
+  background-color: #1e1e1e !important;
+  color: #f8f9fa !important;
+}
+
+.app-body.dark-mode input,
+.app-body.dark-mode select {
+  background-color: #2c2c2c !important;
+  color: #f8f9fa !important;
+  border: 1px solid #555 !important;
+}
+
+.app-body.dark-mode label {
+  color: #f8f9fa !important;
+}
+
+.footer a.footer-link {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+}
+.footer a.footer-link:hover {
+  color: var(--text);
+  border-bottom-color: var(--card-border);
+}
+
+.footer-social a {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.footer-social a:hover {
+  color: #ff5e5e;
+}
+
+/* ====== Toggle ====== */
+/* Botón modo oscuro dentro del header */
+.hero-actions .modo-toggle {
+  position: static;        /* que respete el flex del header */
+  width: auto;
+  height: auto;
+  border-radius: 14px;     /* como un botón normal */
+  padding: 8px 12px;
+}
+
+.modo-toggle .toggle-emoji {
+  display: inline-block; font-size: 1.15rem; transform: translateY(1px);
+}
+
+/* ====== ABRACADABRA (Resultado 32) ====== */
+#abracadabra td {
+  font-family: monospace;
+  white-space: pre;
+  color: var(--text);
+  background-color: transparent;
+}
+
+#abracadabra .card-body {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+}
+
+
+
+/* ====== ABRACADABRA (Tema claro y oscuro integrado) ====== */
+
+#abracadabra table {
+  color: var(--text);
+  background: transparent;
+  border-collapse: separate;
+  border-spacing: 0.3rem;
+}
+
+#abracadabra th,
+#abracadabra td {
+  background: transparent;
+  color: var(--text);
+  font-family: monospace;
+  vertical-align: middle;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+/* Etiquetas de edad lateral */
+#abracadabra td.text-end {
+  color: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Sumas de la derecha */
+#abracadabra td.text-start {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+/* Letras principales */
+#abracadabra thead span[id^="abracadabra_nombre_"] {
+  font-weight: 700;
+  color: var(--accent-1);
+  font-size: 1.1em;
+}
+
+/* Hover para valores internos */
+#abracadabra td span[id^="r"] {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+/* ════════════════════════════════════════════════
+   ✦ ABRACADABRA – versión estable Bootstrap friendly
+   Mantiene proporciones, centra todo, y conserva la columna izquierda visible
+═════════════════════════════════════════════════ */
+
+.abracadabra-table {
+  width: 100%;               /* se expande hasta el borde del contenedor */
+  max-width: 1200px;         /* límite elegante */
+  margin: 0 auto;
+  table-layout: auto;        /* deja que las celdas se achiquen */
+}
+
+#abracadabra .table-responsive {
+  overflow-x: auto;
+  display: block;
+  padding: 0.5rem 0;
+}
+
+/* Columna izquierda: rango de edades */
+#abracadabra td.text-end {
+  white-space: nowrap;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--bg-soft);
+  border-right: 1px solid var(--card-border);
+}
+
+/* Columna derecha: suma */
+#abracadabra td.text-start {
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--accent-2);
+  background: var(--bg-soft);
+  border-left: 1px solid var(--card-border);
+}
+
+/* Centrado y proporciones uniformes */
+#abracadabra th,
+#abracadabra td {
+  text-align: center;
+  vertical-align: middle;
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.45rem;
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+/* Hover leve para las celdas numéricas */
+#abracadabra td span[id^="r"] {
+  display: inline-block;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  transition: background 0.25s ease;
+}
+#abracadabra td span[id^="r"]:hover {
+  background: rgba(124,77,255,0.15);
+}
+
+/* Responsividad progresiva */
+@media (max-width: 992px) {
+  #abracadabra th, #abracadabra td {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.35rem;
+  }
+}
+@media (max-width: 768px) {
+  #abracadabra th strong { display: none; } /* oculta edades medias */
+}
+@media (max-width: 576px) {
+  #abracadabra th, #abracadabra td {
+    font-size: 0.75rem;
+    padding: 0.2rem;
+  }
+}
+
+
+/* ════════════════════════════════════════════════
+   ✦ Inputs dobles en línea (label + resultado)
+   ✦ Compatibles con form-control-neo y modo claro/oscuro
+═════════════════════════════════════════════════ */
+
+.inline-duo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inline-duo input:first-child {
+  flex: 1;
+  background: transparent;
+  border: 1px dashed var(--card-border);
+  color: var(--muted);
+  font-style: italic;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.inline-duo input:last-child {
+  flex: 0 0 80px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  transition: all 0.25s ease;
+}
+
+.inline-duo input:last-child:focus {
+  outline: none;
+  transform: scale(1.03);
+}
+
+/* Tema claro: mantener contraste equilibrado */
+.app-body:not(.dark-mode) .inline-duo input:first-child {
+  border-color: rgba(60,60,60,0.25);
+  color: var(--muted);
+}
+.app-body:not(.dark-mode) .inline-duo input:last-child {
+  background: #fff;
+  border-color: rgba(60,60,60,0.25);
+}
+
+/* ════════════════════════════════════════════════
+   ✦ Corrección de layout: evita que los inline-duo
+     se salgan o se solapen en grids de 3 columnas
+═════════════════════════════════════════════════ */
+.inline-duo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  width: 100%;
+  min-width: 0;             /* permite que se adapte dentro del col */
+}
+
+.inline-duo input:first-child {
+  flex: 1 1 auto;           /* que se reduzca si no hay espacio */
+  min-width: 0;             /* evita overflow horizontal */
+}
+
+.inline-duo input:last-child {
+  flex: 0 0 70px;           /* resultado compacto fijo */
+  min-width: 70px;
+}
+
+/* En pantallas pequeñas (tablets y móviles),
+   forzamos los inputs a apilarse verticalmente */
+@media (max-width: 992px) {
+  .inline-duo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .inline-duo input:last-child {
+    flex: 1 1 auto;
+    width: 100%;
+    margin-top: 4px;
+  }
+}
+
+
+/* ====== Variables de tabla por tema ====== */
+
+/* ====== Tabla Base Kármica (dinámica) ====== */
+#tablaBaseKarma .table-glass {
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--text) !important;
+  --bs-table-bg: transparent !important;
+  background: transparent !important;
+}
+/* Separador crudo/reducido */
+#tablaBaseKarma .num-sep {
+  color: var(--muted) !important;
+  font-weight: 600;
+  padding: 0 2px;
+  opacity: 0.8;
+}
+
+#tablaBaseKarma .table-glass thead th {
+  background: var(--table-head-bg) !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+  font-weight: 800;
+}
+
+#tablaBaseKarma .table-glass th,
+#tablaBaseKarma .table-glass td {
+  background: var(--table-cell-bg) !important;
+  color: var(--text) !important;
+  border-bottom: 1px dashed var(--card-border) !important;
+  border-right: 1px dashed var(--card-border) !important;
+}
+
+/* quitar borde derecho al final de cada fila */
+#tablaBaseKarma .table-glass tr > *:last-child {
+  border-right: 0 !important;
+}
+
+/* Hover suave */
+#tablaBaseKarma .table-glass tbody tr:hover > * {
+  background: var(--table-cell-bg-hover) !important;
+}
+
+/* Karma cells (en vez de inline style) */
+#tablaBaseKarma .karma-cell {
+  color: var(--karma-color) !important;
+  font-weight: 800;
+}
+
+/* La "k" del tooltip igual */
+#tablaBaseKarma .karma-k {
+  color: var(--karma-color) !important;
+  font-weight: 800;
+}
+
+/* ============================================
+   VISTA COMPACTA TIPO TABLERO
+   ============================================ */
+
+/* Ocupamos todo el alto de la ventana */
+html, body {
+  height: 100%;
+}
+
+/* Texto general más pequeño */
+.app-body {
+  font-size: 0.80rem;
+}
+
+/* En pantallas grandes lo hacemos un poco más pequeño aún
+   para que quepa más contenido en la vista */
+@media (min-width: 1200px) {
+  .app-body {
+    font-size: 0.75rem;
+  }
+}
+
+/* HEADER: que la barra ocupe todo el ancho */
+.hero .container {
+  max-width: 100% !important;
+  padding: 10px 16px;
+}
+
+/* CONTENIDO: usar todo el ancho disponible y menos padding vertical */
+.content {
+  padding: 8px 8px 28px;
+}
+
+/* Bootstrap hace que .container tenga max-width fijo;
+   aquí lo rompemos para que sea 100% y se parezca más a la app amarilla */
+.content.container {
+  max-width: 100% !important;
+}
+
+/* Títulos más compactos */
+h1 {
+  font-size: 1.6rem;
+}
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+.card-title {
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+}
+.card-subtitle {
+  font-size: 0.85rem;
+}
+
+/* Tarjetas más apretadas */
+.card.glass .card-body {
+  padding: 8px 10px;
+}
+
+/* Reducimos márgenes verticales entre bloques
+   (sobrescribimos las clases mb-4 / mb-5 dentro del main) */
+.content .mb-4 {
+  margin-bottom: 0.8rem !important;
+}
+.content .mb-5 {
+  margin-bottom: 1rem !important;
+}
+
+/* Inputs más bajos y con texto más pequeño */
+.form-control-neo {
+  padding: 6px 8px;
+  font-size: 0.80rem;
+}
+
+/* Bloques de Etapas / Desafíos más compactos */
+.etapa {
+  gap: 18px;
+  font-size: 1rem;       /* antes ~1.35rem */
+  padding: 6px 10px;     /* menos padding */
+}
+.fila-1 {
+  padding-inline: 18px;  /* antes 38px */
+}
+.fila-2 {
+  gap: 30px;             /* antes 56px */
+}
+
+/* Tablas más pequeñas (Cuatrimestres, tabla base, etc.) */
+.table-glass thead th {
+  font-size: 0.80rem;
+  padding: 4px 6px;
+}
+.table-glass tbody td {
+  padding: 6px 6px;      /* antes 18px 10px */
+  font-size: 0.80rem;
+}
+
+/* ABRACADABRA todavía más compacto para que no se “coma” toda la altura */
+#abracadabra th,
+#abracadabra td {
+  font-size: 0.75rem;     /* antes 0.9rem */
+  padding: 0.18rem 0.22rem;
+}
+
+/* En pantallas grandes, las celdas internas del abracadabra
+   ya están controladas arriba, no hace falta tocarlas más */
+
+
+  
