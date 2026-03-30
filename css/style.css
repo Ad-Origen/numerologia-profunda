@@ -199,6 +199,10 @@
 .fila-2 { gap: 56px; }
 .fila-3, .fila-4 { gap: 12px; }
 
+.resultado-destacado {
+  color: #00e676 !important;
+  font-weight: 700 !important;
+}
 /* ====== Tables ====== */
 /* Asegurar color de texto de la tabla según el tema */
 .table-glass,
